@@ -1,0 +1,176 @@
+<html>
+<meta charset="utf-8">
+<!--by Gabe-->
+<!--iotE2 displays 6 names of drivers -->
+
+<style>
+	@font-face{ 
+		font-family: 'proximanova-light-webfont';
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-light-webfont.eot');
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-light-webfont.eot?#iefix') format('embedded-opentype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-light-webfont.woff') format('woff'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-light-webfont.ttf') format('truetype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-light-webfont.svg#webfont') format('svg');
+	}
+	
+	
+	@font-face{ 
+		font-family: 'proximanova-bold-webfont';
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-bold-webfont.eot');
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-bold-webfont.eot?#iefix') format('embedded-opentype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-bold-webfont.woff') format('woff'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-bold-webfont.ttf') format('truetype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-bold-webfont.svg#webfont') format('svg');
+	}	
+	
+	@font-face{ 
+		font-family: 'proximanova-semibold-webfont';
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-semibold-webfont.eot');
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-semibold-webfont.woff') format('woff'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-semibold-webfont.ttf') format('truetype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-semibold-webfont.svg#webfont') format('svg');
+	}	
+	
+	@font-face{ 
+		font-family: 'proximanova-regitalic-webfont';
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-regitalic-webfont.eot');
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-regitalic-webfont.eot?#iefix') format('embedded-opentype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-regitalic-webfont.woff') format('woff'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-regitalic-webfont.ttf') format('truetype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-regitalic-webfont.svg#webfont') format('svg');
+	}	
+    
+	
+    body {
+        font-family: 'proximanova-light-webfont', Arial, sans-serif;
+        margin: 0px;
+		height: 40px;
+        position: relative;
+		background-color: transparent;
+		color: white;
+    }
+
+	.title {
+		font-size: 24px;
+	}
+	
+	#racer1 #racer2 #racer3 #racer4 #racer5 #racer6 {
+		font-size: 14px;
+	}
+
+
+	.footer {
+		font-size: 14px;
+	}
+
+	hr {
+	    display: block;
+	    height: 2px;
+	    border: 0;
+	    border-top: 1px solid #347cf1;
+	    margin: 1em 0;
+	    padding: 0;
+		width: 90%;
+	}
+
+	.images {
+	    display: inline;
+	    margin: 0px;
+	    padding: 0px;
+	    vertical-align:middle;
+	    width:80px;
+		border-radius: 50px;
+	}
+	
+	#content {
+	    display: block;
+	    margin: 0px;
+		display: inline-block;
+	}
+	
+	.icondiv{
+		text-align: center;
+		    width: 80px;
+		    display: inline-block;
+	}
+	
+	p {
+		margin: 0;
+		text-align: center;
+		    width: 80px;
+		    display: inline-block;
+	}
+	
+</style>
+<body>
+	
+		<div id="content">
+    		<p id="racer1"></p></div>
+    		<p id="racer2"></p></div>
+    		<p id="racer3"></p></div>
+    		<p id="racer4"></p></div>
+    		<p id="racer5"></p></div>
+    		<p id="racer6"></p></div>
+		</div>
+
+
+	
+<div id="result"></div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://stage.sde.birst.com/js/birst_embed.js"></script>
+
+<script>
+
+
+    //function not needed as long as BQL chops up names correctly.
+    function chopUpName(name){
+		return name
+		// if (!name) return "";
+		//     	return name.split(" ")[0][0] + " " + name.split(" ")[1]
+		
+    }
+
+    var eventHandler = function (e) {
+
+
+
+
+        if (e.data.operation === "executeQueryResult") 
+			//display the query result as data			
+		{
+
+console.log(e.data.result.rows)
+			
+			$("#racer1")[0].textContent = chopUpName(e.data.result.rows[0][0])
+			$("#racer2")[0].textContent = chopUpName(e.data.result.rows[0][1])			
+			$("#racer3")[0].textContent = chopUpName(e.data.result.rows[0][2])
+			$("#racer4")[0].textContent = chopUpName(e.data.result.rows[0][3])
+			$("#racer5")[0].textContent = chopUpName(e.data.result.rows[0][4])
+			$("#racer6")[0].textContent = chopUpName(e.data.result.rows[0][5])
+			
+
+
+			
+		}
+
+
+    }
+
+
+
+
+    BirstConfig.callBack(eventHandler);
+    var BQL = "select lookuprow(0,1,lookuprow(0,1, select [Driver.Race Driver Name], [Race.RaceID], [Race.RaceDateTime] , [Race.Race Date] , DateDiff(second, Now, [Race.RaceDateTime]) 'SecsTilNextRace', Format(Now, 'MM/dd/yy hh:mm:ss a z') 'NowFormattedString' from [All] display where [SecsTilNextRace]>=0 display by [SecsTilNextRace] asc) , select [Driver.DriverID], [Driver.Race Driver Name], [Race.RaceID], [Race.RaceDateTime] , [Race.Race Date] , DateDiff(second, Now, [Race.RaceDateTime]) 'SecsTilNextRace', Format(Now, 'MM/dd/yy hh:mm:ss a z') 'NowFormattedString' from [All] display where [Race.RaceID] =%0  AND  [SecsTilNextRace]>=0 display by [SecsTilNextRace] asc, [DriverID] asc) 'NextRaceDriverName1' , lookuprow(1,1,lookuprow(0,1, select [Driver.Race Driver Name], [Race.RaceID], [Race.RaceDateTime] , [Race.Race Date] , DateDiff(second, Now, [Race.RaceDateTime]) 'SecsTilNextRace', Format(Now, 'MM/dd/yy hh:mm:ss a z') 'NowFormattedString' from [All] display where [SecsTilNextRace]>=0 display by [SecsTilNextRace] asc) , select [Driver.DriverID], [Driver.Race Driver Name], [Race.RaceID], [Race.RaceDateTime] , [Race.Race Date] , DateDiff(second, Now, [Race.RaceDateTime]) 'SecsTilNextRace', Format(Now, 'MM/dd/yy hh:mm:ss a z') 'NowFormattedString' from [All] display where [Race.RaceID] =%0  AND  [SecsTilNextRace]>=0 display by [SecsTilNextRace] asc, [DriverID] asc) 'NextRaceDriverName2' , lookuprow(2,1,lookuprow(0,1, select [Driver.Race Driver Name], [Race.RaceID], [Race.RaceDateTime] , [Race.Race Date] , DateDiff(second, Now, [Race.RaceDateTime]) 'SecsTilNextRace', Format(Now, 'MM/dd/yy hh:mm:ss a z') 'NowFormattedString' from [All] display where [SecsTilNextRace]>=0 display by [SecsTilNextRace] asc) , select [Driver.DriverID], [Driver.Race Driver Name], [Race.RaceID], [Race.RaceDateTime] , [Race.Race Date] , DateDiff(second, Now, [Race.RaceDateTime]) 'SecsTilNextRace', Format(Now, 'MM/dd/yy hh:mm:ss a z') 'NowFormattedString' from [All] display where [Race.RaceID] =%0  AND  [SecsTilNextRace]>=0 display by [SecsTilNextRace] asc, [DriverID] asc) 'NextRaceDriverName3' , lookuprow(3,1,lookuprow(0,1, select [Driver.Race Driver Name], [Race.RaceID], [Race.RaceDateTime] , [Race.Race Date] , DateDiff(second, Now, [Race.RaceDateTime]) 'SecsTilNextRace', Format(Now, 'MM/dd/yy hh:mm:ss a z') 'NowFormattedString' from [All] display where [SecsTilNextRace]>=0 display by [SecsTilNextRace] asc) , select [Driver.DriverID], [Driver.Race Driver Name], [Race.RaceID], [Race.RaceDateTime] , [Race.Race Date] , DateDiff(second, Now, [Race.RaceDateTime]) 'SecsTilNextRace', Format(Now, 'MM/dd/yy hh:mm:ss a z') 'NowFormattedString' from [All] display where [Race.RaceID] =%0  AND  [SecsTilNextRace]>=0 display by [SecsTilNextRace] asc, [DriverID] asc) 'NextRaceDriverName4' , lookuprow(4,1,lookuprow(0,1, select [Driver.Race Driver Name], [Race.RaceID], [Race.RaceDateTime] , [Race.Race Date] , DateDiff(second, Now, [Race.RaceDateTime]) 'SecsTilNextRace', Format(Now, 'MM/dd/yy hh:mm:ss a z') 'NowFormattedString' from [All] display where [SecsTilNextRace]>=0 display by [SecsTilNextRace] asc) , select [Driver.DriverID], [Driver.Race Driver Name], [Race.RaceID], [Race.RaceDateTime] , [Race.Race Date] , DateDiff(second, Now, [Race.RaceDateTime]) 'SecsTilNextRace', Format(Now, 'MM/dd/yy hh:mm:ss a z') 'NowFormattedString' from [All] display where [Race.RaceID] =%0  AND  [SecsTilNextRace]>=0 display by [SecsTilNextRace] asc, [DriverID] asc) 'NextRaceDriverName5' , lookuprow(5,1,lookuprow(0,1, select [Driver.Race Driver Name], [Race.RaceID], [Race.RaceDateTime] , [Race.Race Date] , DateDiff(second, Now, [Race.RaceDateTime]) 'SecsTilNextRace', Format(Now, 'MM/dd/yy hh:mm:ss a z') 'NowFormattedString' from [All] display where [SecsTilNextRace]>=0 display by [SecsTilNextRace] asc) , select [Driver.DriverID], [Driver.Race Driver Name], [Race.RaceID], [Race.RaceDateTime] , [Race.Race Date] , DateDiff(second, Now, [Race.RaceDateTime]) 'SecsTilNextRace', Format(Now, 'MM/dd/yy hh:mm:ss a z') 'NowFormattedString' from [All] display where [Race.RaceID] =%0  AND  [SecsTilNextRace]>=0 display by [SecsTilNextRace] asc, [DriverID] asc) 'NextRaceDriverName6' from [All] ";
+	
+	
+	
+    BirstConfig.getData(BQL);
+
+
+
+
+
+</script>
+</body>
+</html>

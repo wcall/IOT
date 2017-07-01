@@ -1,0 +1,132 @@
+<html>
+<meta charset="utf-8">
+<!--by Gabe-->
+<!--A-->
+<style>
+	@font-face{ 
+		font-family: 'proximanova-light-webfont';
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-light-webfont.eot');
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-light-webfont.eot?#iefix') format('embedded-opentype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-light-webfont.woff') format('woff'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-light-webfont.ttf') format('truetype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-light-webfont.svg#webfont') format('svg');
+	}
+	
+	
+	@font-face{ 
+		font-family: 'proximanova-bold-webfont';
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-bold-webfont.eot');
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-bold-webfont.eot?#iefix') format('embedded-opentype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-bold-webfont.woff') format('woff'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-bold-webfont.ttf') format('truetype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-bold-webfont.svg#webfont') format('svg');
+	}	
+	
+	@font-face{ 
+		font-family: 'proximanova-semibold-webfont';
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-semibold-webfont.eot');
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-semibold-webfont.woff') format('woff'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-semibold-webfont.ttf') format('truetype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-semibold-webfont.svg#webfont') format('svg');
+	}	
+	
+	@font-face{ 
+		font-family: 'proximanova-regitalic-webfont';
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-regitalic-webfont.eot');
+		src: url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-regitalic-webfont.eot?#iefix') format('embedded-opentype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-regitalic-webfont.woff') format('woff'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-regitalic-webfont.ttf') format('truetype'),
+		     url('https://xippublicbirst01.cloud.infor.com/html/resources/infor/proximanova-regitalic-webfont.svg#webfont') format('svg');
+	}	
+    
+	
+    body {
+        font-family: 'proximanova-light-webfont', Arial, sans-serif;
+        margin: 0px;
+        position: relative;
+		background-color: transparent;
+		color: white;
+    }
+
+	.title {
+		font-size: 24px;
+	}
+	
+	#ampm {
+		font-size: 48px;
+    position: absolute;
+    bottom: 0px;
+	}
+	
+	#displayData {
+		font-size: 150px;
+    float: left;
+	}
+  
+  .container {
+    position: absolute;
+    float:left;
+    height: 150px;
+  }
+
+	.footer {
+		font-size: 14px;
+		padding-left: 20px;
+	}
+
+	hr {
+	    display: block;
+	    height: 2px;
+	    border: 0;
+	    border-top: 1px solid #347cf1;
+	    margin: 1em 0;
+	    padding: 0;
+		width: 90%;
+	}
+
+
+</style>
+<body>
+	<div class="title">NEXT RACE</div><hr/>
+  	<div class="container">
+   	 <div id="displayData">...</div>
+    	<span id="ampm">AM</span>
+ 	 </div>
+	<br>
+	<br><br><br><br><br><br><br><br><br>
+	<div class="footer">Visit the racetrack to sign up for a spot!</div>	
+	
+<div id="result"></div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://stage.sde.birst.com/js/birst_embed.js"></script>
+
+<script>
+
+
+    var eventHandler = function (e) {
+
+
+
+
+        if (e.data.operation === "executeQueryResult") 
+			//display the query result as data			
+		{
+
+			$("#displayData")[0].textContent = e.data.result.rows[0][0]
+			$("#ampm")[0].textContent = e.data.result.rows[0][1]			
+	
+	    }
+
+
+    }
+
+    BirstConfig.callBack(eventHandler);
+    var BQL = "select LookupRow(0,2,SELECT [Race.RaceID] 'RaceID', [Race.RaceDateTime] 'RaceDateTime',SavedExpression('Race Time') 'Race Time',SavedExpression('Race Time AM PM Marker') 'AM PM Marker', Format(Now, 'MM/dd/yy hh:mm:ss a z') 'NowFormattedString', DateDiff(second, Now, [Race.RaceDateTime]) 'SecsTilNextRace'   FROM [ALL] DISPLAY WHERE [SecsTilNextRace]>0 DISPLAY BY [SecsTilNextRace]  ASC) 'Next Race Time' , LookupRow(0,3, SELECT [Race.RaceID] 'RaceID', [Race.RaceDateTime] 'RaceDateTime',SavedExpression('Race Time') 'Race Time',SavedExpression('Race Time AM PM Marker') 'AM PM Marker', Format(Now, 'MM/dd/yy hh:mm:ss a z') 'NowFormattedString', DateDiff(second, Now, [Race.RaceDateTime]) 'SecsTilNextRace'   FROM [ALL] DISPLAY WHERE [SecsTilNextRace]>0 DISPLAY BY [SecsTilNextRace]  ASC) 'Next Race AM/PM' from [All]";
+    BirstConfig.getData(BQL);
+
+
+</script>
+</body>
+</html>
